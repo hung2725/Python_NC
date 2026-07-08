@@ -1,0 +1,66 @@
+<!-- post.html -->
+
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <article>
+            <h1 class="mb-3">{{ post.title }}</h1>
+            
+            <div class="text-muted mb-4">
+                <small>
+                    Bởi <strong>{{ post.author.username }}</strong> • 
+                    {{ post.created_at.strftime('%d/%m/%Y %H:%M') }}
+                    {% if post.updated_at != post.created_at %}
+                        • Cập nhật: {{ post.updated_at.strftime('%d/%m/%Y %H:%M') }}
+                    {% endif %}
+                </small>
+            </div>
+            
+            <div class="post-content">
+                {{ post.content|safe }}
+            </div>
+        </article>
+        
+        <hr class="my-4">
+
+            <!-- Form bình luận -->
+            <div class="card mb-4">
+                <div class="card-header"><h4>PhamTheHung_2374802010164_0103</h4><h5>Viết bình luận</h5></div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.content(class="form-control" + (" is-invalid" if form.content.errors else ""), rows="3") }}
+                            {% for error in form.content.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </form>
+                </div>
+            </div>
+
+<!-- Danh sách bình luận -->
+<div class="card">
+    <div class="card-header"><h4>PhamTheHung_2374802010164_0103</h4><h5>Bình luận</h5></div>
+    <div class="card-body">
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="mb-3">
+                    <strong>{{ comment.user.username }}</strong>
+                    <small class="text-muted">• {{ comment.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
+                    <p class="mt-2">{{ comment.content }}</p>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">Chưa có bình luận nào. Hãy là người đầu tiên!</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+# recommender.py
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+class VPopRecommender:
+    def __init__(self, csv_file="vpop_songs_5000.csv"):
+        self.df = pd.read_csv(csv_file)
+        # Tạo cột text cho TF-IDF
+        self.df["text"] = (
+            self.df["name"].fillna("") + " " +
+            self.df["artist"].fillna("") + " " +
+            self.df["album"].fillna("")
+        )
+        self.vectorizer = TfidfVectorizer(stop_words="english")
+        self.tfidf_matrix = self.vectorizer.fit_transform(self.df["text"])
+        self.similarity = cosine_similarity(self.tfidf_matrix)
+
+    def recommend(self, song_name, artist_name=None, top_n=5):
+        # Tìm index bài hát
+        if artist_name:
+            match = self.df[(self.df["name"] == song_name) & (self.df["artist"] == artist_name)]
+        else:
+            match = self.df[self.df["name"] == song_name]
+        if match.empty:
+            return []
+        idx = match.index[0]
+
+        # Lấy top_n bài tương tự
+        sim_scores = list(enumerate(self.similarity[idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:top_n+1]
+
+        recs = []
+        for i, score in sim_scores:
+            song = self.df.iloc[i]
+            recs.append({
+                "name": song["name"],
+                "artist": song["artist"],
+                "album": song["album"] if pd.notna(song["album"]) else "",
+                "image": song["image"] if pd.notna(song["image"]) else None,
+                "youtube_url": song["youtube_url"] if pd.notna(song["youtube_url"]) else None,
+            })
+        return recs
+    
+    

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} – My Blog{% endblock %}
+
+{% block content %}
+<article class="mb-5">
+  <h1 class="fw-bold">{{ post.title }}</h1>
+  <p class="text-muted">
+    By {{ post.author.username }} | {{ post.timestamp.strftime('%B %d, %Y') }}
+  </p>
+
+  {% if post.image_url %}
+    <img src="{{ post.image_url }}" class="img-fluid my-3 rounded shadow-sm" alt="{{ post.title }}">
+  {% endif %}
+
+  <div class="fs-5 mb-5">{{ post.content | safe }}</div>
+</article>
+
+<hr class="my-5">
+
+<!-- Khu vực bình luận -->
+<section id="comments">
+  <h3 class="fw-bold mb-4">Bình luận</h3>
+
+  <!-- Hiển thị danh sách bình luận -->
+  {% if comments %}
+    {% for c in comments %}
+      <div class="border rounded p-3 mb-3 bg-light">
+        <strong>{{ c.author.username }}</strong>
+        <small class="text-muted float-end">{{ c.timestamp.strftime('%d/%m/%Y %H:%M') }}</small>
+        <p class="mt-2 mb-0">{{ c.content }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-muted">Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+  {% endif %}
+</section>
+
+<hr class="my-5">
+
+<!-- Form bình luận -->
+{% if current_user.is_authenticated %}
+  <h4 class="fw-bold mb-3">Viết bình luận của bạn</h4>
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.content.label(class="form-label") }}
+      {{ form.content(class="form-control", rows="3", placeholder="Nhập nội dung bình luận...") }}
+      {% for error in form.content.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary px-4">Gửi bình luận</button>
+  </form>
+{% else %}
+  <div class="alert alert-info mt-4">
+    <a href="{{ url_for('auth.login') }}">Đăng nhập</a> để bình luận bài viết này.
+  </div>
+{% endif %}
+
+<a href="{{ url_for('main.index') }}" class="btn btn-secondary mt-5">⬅ Quay lại trang chủ</a>
+{% endblock %}

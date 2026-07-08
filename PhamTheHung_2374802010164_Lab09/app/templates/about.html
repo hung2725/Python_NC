@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row align-items-center">
+    <!-- Cột ảnh -->
+    <div class="col-md-5 mb-4 mb-md-0 text-center">
+      <img src="{{ image_url }}" 
+           class="img-fluid rounded mb-3" 
+           alt="Profile photo"
+           style="max-width: 70%; height: auto; display: block; margin: 0 auto;">
+    </div>
+
+    <!-- Cột bio & info -->
+    <div class="col-md-7">
+      {% if bio %}
+        {% set lines = bio.split('\n') %}
+        {% for line in lines %}
+          {% if loop.index0 == 0 %}
+            <h3 class="fw-bold">{{ line }}</h3>
+          {% else %}
+            <p>{{ line }}</p>
+          {% endif %}
+        {% endfor %}
+
+        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        {% if current_user.phone %}<p><strong>Phone:</strong> {{ current_user.phone }}</p>{% endif %}
+        {% if current_user.address %}<p><strong>Address:</strong> {{ current_user.address }}</p>{% endif %}
+
+      {% else %}
+        <form method="POST" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          <div class="mb-2">
+            {{ form.picture.label(class="form-label") }}
+            {{ form.picture(class="form-control") }}
+          </div>
+          <div class="mb-3">
+            {{ form.bio.label(class="form-label") }}
+            {{ form.bio(class="form-control", rows="6") }}
+          </div>
+          <div class="mb-3">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+          </div>
+          <div class="mb-3">
+            {{ form.phone.label(class="form-label") }}
+            {{ form.phone(class="form-control") }}
+          </div>
+          <div class="mb-3">
+            {{ form.address.label(class="form-label") }}
+            {{ form.address(class="form-control") }}
+          </div>
+          {{ form.submit(class="btn btn-primary") }}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+<h2>Phạm Thế Hùng - 2374802010164 - Lớp 0103</h2>
+
+<h3>User List:</h3>
+<ul>
+{% for user in users %}
+    <li>
+        {{ user.name }} - {{ user.email }}
+        {% if loop.first %}(First user){% endif %}
+        {% if loop.last %}(Last user){% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<p>Total users: {{ users|length }}</p>

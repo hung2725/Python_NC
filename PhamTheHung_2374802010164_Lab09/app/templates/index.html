@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block hero %}
+<section class="text-center py-5 bg-white border-bottom">
+  <div class="container">
+    <h2 class="fw-bold display-4";">Phạm Thế Hùng - 2374802010164 - 0103</h2>
+    <!-- <p class="text-muted fs-5"></p>  viết thêm gì thì viết -->
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  
+  <!-- Recent Posts -->
+  <h2 class="fw-bold display-6 text-center mb-5">Bài Viết Gần Đây</h2>
+
+  {% for post in posts.items %}
+  <div class="row mb-5 align-items-center post-preview">
+    <!-- Image on left -->
+    <div class="col-md-6">
+      {% if post.image_url %}
+      <img src="{{ post.image_url }}" class="img-fluid rounded shadow-sm" alt="{{ post.title }}">
+      {% endif %}
+    </div>
+
+    <!-- Content on right -->
+    <div class="col-md-6">
+      <p class="text-muted mb-1 small">
+        {{ post.timestamp.strftime('%B %d, %Y') }} &nbsp;·&nbsp; 2 min read
+      </p>
+      <h3 class="fw-bold">
+        <a href="{{ url_for('main.post', post_id=post.id) }}" class="text-decoration-none text-dark">
+          {{ post.title }}
+        </a>
+      </h3>
+      <p class="text-muted">{{ post.content[:180] }}...</p>
+      <a href="{{ url_for('main.post', post_id=post.id) }}" class="text-decoration-none" style="color:#d35400;">
+        Đọc thêm....
+      </a>
+    </div>
+
+    <hr class="mt-4">
+  </div>
+  {% endfor %}
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation" class="mt-5">
+    <ul class="pagination justify-content-center">
+      {% if posts.has_prev %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('main.index', page=posts.prev_num) }}">← Previous</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">← Previous</span></li>
+      {% endif %}
+
+      <li class="page-item disabled">
+        <span class="page-link">Page {{ posts.page }} of {{ posts.pages }}</span>
+      </li>
+
+      {% if posts.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('main.index', page=posts.next_num) }}">Next →</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Next →</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+</div>
+{% endblock %}

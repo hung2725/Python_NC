@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Create Post – My Blog{% endblock %}
+
+{% block content %}
+<h2>Tạo bài viết mới</h2>
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.title.label(class="form-label") }}
+    {{ form.title(class="form-control") }}
+    {% for error in form.title.errors %}
+      <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    {{ form.image_url.label(class="form-label") }}
+    {{ form.image_url(class="form-control") }}
+    <small class="form-text text-muted">Hoặc nhập URL ảnh nếu không upload file.</small>
+    {% for error in form.image_url.errors %}
+      <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    {{ form.image_file.label(class="form-label") }}
+    {{ form.image_file(class="form-control") }}
+    <small class="form-text text-muted">Upload ảnh từ máy tính (jpg, jpeg, png, gif).</small>
+    {% for error in form.image_file.errors %}
+      <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    {{ form.content.label(class="form-label") }}
+    {{ form.content(class="form-control", rows="10") }}
+    {% for error in form.content.errors %}
+      <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+  </div>
+
+  {{ form.submit(class="btn btn-primary") }}
+</form>
+
+<a href="{{ url_for('main.index') }}" class="btn btn-secondary mt-2">Cancel</a>
+{% endblock %}

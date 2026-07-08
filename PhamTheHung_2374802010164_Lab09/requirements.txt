@@ -1,0 +1,46 @@
+flask 
+flask_sqlalchemy 
+flask_migrate 
+flask_login 
+flask_wtf 
+email_validator
+python-slugify
+
+
+
+
+# pip install flask flask_sqlalchemy flask_migrate flask_login flask_wtf email_validator
+
+
+# set FLASK_APP=run.py
+# set FLASK_ENV=development
+# flask db init
+# flask db migrate -m "Initial migration"
+# flask db upgrade
+# flask db migrate -m "Add Post table"
+# flask db upgrade
+# flask db migrate -m "Add about fields to User"
+# flask db upgrade
+# flask run
+
+
+
+
+#----- đóng gói docker-----
+# docker build -t myproject:latest .
+# docker run -d -p 5000:5000 blogcanhan:latest
+# chạy thì mở trình duyệt và nhaapj http://localhost:5000
+#-----đóng gói gửi cho người khác----
+# docker save -o myproject.tar myproject:latest
+#----khi người khác nhận được thì chạy 2 câu này
+# docker load -i myproject.tar 
+# docker run -p 5000:5000 myproject:latest
+
+
+
+#-----fixxloio
+# flask db migrate -m "Fix comment relationship"
+# flask db upgrade
+
+# flask db migrate -m "Add phone and address to User"
+# flask db upgrade

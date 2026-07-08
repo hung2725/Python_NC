@@ -1,0 +1,15 @@
+alembic
+blinker
+click
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-WTF
+itsdangerous
+Jinja2
+Mako
+MarkupSafe
+SQLAlchemy
+typing_extensions
+Werkzeug
+WTForms

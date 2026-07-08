@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}My Blog{% endblock %}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  {% block head %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="{{ url_for('main.index') }}">MyBlog</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav gap-4 fs-5">
+        <!-- HOME: luôn truy cập được -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" 
+             href="{{ url_for('main.index') }}">
+            Home
+          </a>
+        </li>
+
+        <!-- BLOG: cần login -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.endpoint == 'main.blog' %}active{% endif %}" 
+             href="{% if current_user.is_authenticated %}{{ url_for('main.blog') }}{% else %}{{ url_for('auth.login') }}{% endif %}">
+            Blog
+          </a>
+        </li>
+
+        <!-- ABOUT: cần login -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.endpoint == 'main.about' %}active{% endif %}" 
+             href="{% if current_user.is_authenticated %}{{ url_for('main.about') }}{% else %}{{ url_for('auth.login') }}{% endif %}">
+            About
+          </a>
+        </li>
+
+        <!-- CONTACT: cần login -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.endpoint == 'main.contact' %}active{% endif %}" 
+             href="{% if current_user.is_authenticated %}{{ url_for('main.contact') }}{% else %}{{ url_for('auth.login') }}{% endif %}">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="navbar-nav ms-auto d-none d-lg-flex">
+      {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.create_post') }}">Bài viết mới</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">Đăng xuất</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('auth.login') }}">Đăng nhập</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('auth.register') }}">Đăng ký</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-3">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+<main class="container my-5">
+  {% block hero %}{% endblock %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="bg-white py-4 mt-auto border-top">
+  <div class="container text-center text-muted">
+    &copy; {{ current_year or 2025 }} Blog Cá Nhân — PhamTheHung_2374802010164_0103.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h2>Welcome to Flask!</h2>
+    <p>This is the home page of our Flask application.</p>
+
+<div class="jumbotron">
+    <h1>Flask Templates Demo</h1>
+    <p class="lead">Comprehensive demonstration of Flask templates with Jinja2, Bootstrap, and more.</p>
+    <a class="btn btn-lg btn-primary" href="{{ url_for('bootstrap_user', name='Demo') }}">
+        Try User Profile  Phạm Thế Hùng - 2374802010164 - Lớp 0103→
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Templates</h3>
+        <p>Learn Jinja2 template engine with variables, filters, and control structures.</p>
+        <a class="btn btn-default" href="{{ url_for('variables_demo', name='TestUser') }}">Variables Demo Phạm Thế Hùng - 2374802010164 - Lớp 0103</a>
+    </div>
+    
+    <div class="col-md-4">
+        <h3>Bootstrap</h3>
+        <p>Beautiful, responsive UI with Flask-Bootstrap integration.</p>
+        <a class="btn btn-default" href="{{ url_for('loops') }}">Loops Demo Phạm Thế Hùng - 2374802010164 - Lớp 0103</a>
+    </div>
+    
+    <div class="col-md-4">
+        <h3>DateTime</h3>
+        <p>Handle dates and times with Flask-Moment and Moment.js.</p>
+        <a class="btn btn-default" href="{{ url_for('datetime_demo') }}"> DateTime Demo Phạm Thế Hùng - 2374802010164 - Lớp 0103</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="alert alert-success">
+    <h4>What you've learned:</h4>
+    <ul>
+        <li>Jinja2 template engine basics</li>
+        <li>Template inheritance and base templates</li>
+        <li>Flask-Bootstrap integration</li>
+        <li>Custom error pages</li>
+        <li>Static files and URL generation</li>
+        <li>Flask-Moment for datetime handling</li>
+    </ul>
+</div>
+{% endblock %}

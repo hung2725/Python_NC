@@ -1,0 +1,36 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0; padding: 0; color: #333;
+}
+
+.navbar { background: #fff; border-bottom: 1px solid #eee; padding: 1rem 0; }
+.navbar .nav { list-style: none; display: flex; gap: 1rem; }
+.navbar .nav li { display: inline; }
+.navbar .nav a { text-decoration: none; color: #333; }
+
+.hero {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.hero-content h1 { font-size: 3rem; margin: 0; }
+.hero-content p { font-size: 1.5rem; }
+
+.container.main-content { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+
+.post-preview img { width: 100%; height: auto; margin-bottom: 1rem; }
+.post-preview h2 { margin: 0.5rem 0; }
+.post-meta { color: #999; font-size: 0.9rem; }
+.read-more { text-decoration: none; color: #007bff; }
+
+.footer { background: #f8f8f8; padding: 1rem 0; text-align: center; color: #666; font-size: 0.9rem; }
+
+.flash-messages .alert { padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; }
+.alert-success { background: #d4edda; color: #155724; }
+.alert-danger { background: #f8d7da; color: #721c24; }
+.alert-info { background: #d1ecf1; color: #0c5460; }

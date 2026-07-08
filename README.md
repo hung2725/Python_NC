@@ -1,11 +1,9 @@
-# Python_NC
-
 # Lập Trình Python Nâng Cao - Thực Hành
 
 **Môn học:** Lập trình Python Nâng Cao  
 **Mã lớp:** 251_71ITSE31003_0103  
 **Sinh viên:** Phạm Thế Hùng - 2374802010164  
-**Trường:** Đại học Văn Lang (Van Lang University)
+
 
 ---
 
@@ -160,6 +158,25 @@ python bai5.py
 - http://localhost:5050 → Trang chủ
 - http://localhost:5050/monhoc → "Day la trang mon hoc!"
 
+#### Bài 6: Route động
+```powershell
+cd D:\Hoc_Tap\HK251\LT_Python_NC\TH\Lab006
+python bai6.py
+```
+- http://localhost:5050/monhoc/Python → "Day la trang mon hoc PYTHON"
+- http://localhost:5050/monhoc/Flask → "Day la trang mon hoc FLASK"
+
+#### Bài 7: Route động + Template
+```powershell
+cd D:\Hoc_Tap\HK251\LT_Python_NC\TH\Lab006
+python bai7.py
+```
+- http://localhost:5050/monhoc/Python → Hiển thị qua template `hello_template.html`
+- http://localhost:5050/sinhvien/2025 → "Day la trang sinh vien nam 2025"
+
+> **Lưu ý:** Bài 7 có lỗi trùng tên hàm `learn()` và `subjects()` (định nghĩa 2 lần). Hàm sau sẽ ghi đè hàm trước. Đây là bài tập mẫu có chủ ý.
+
+---
 
 ## Lab 01 - Tkinter cơ bản
 
